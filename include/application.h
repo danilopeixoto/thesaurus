@@ -39,56 +39,56 @@ THESAURUS_NAMESPACE_BEGIN
 
 class Application {
 public:
-	enum Theme {
-		Light = 0,
-		Dark,
-		Default
-	};
+    enum Theme {
+        Light = 0,
+        Dark,
+        Default
+    };
 
-	struct Preferences {
-		Preferences(const Translator::Language & = Translator::Language::Default,
-			const Theme & = Theme::Default);
-		~Preferences();
+    struct Preferences {
+        Preferences(const Translator::Language & = Translator::Language::Default,
+            const Theme & = Theme::Default);
+        ~Preferences();
 
-		Translator::Language language;
-		Theme theme;
-	};
+        Translator::Language language;
+        Theme theme;
+    };
 
-	Application();
-	~Application();
+    Application();
+    ~Application();
 
-	void execute();
+    void execute();
 
 private:
-	size_t option;
+    size_t option;
 
-	Dictionary dictionary;
-	Translator translator;
-	Preferences preferences;
+    Dictionary dictionary;
+    Translator translator;
+    Preferences preferences;
 
-	FILE * preferenceFile;
+    FILE * preferenceFile;
 
-	void setTheme(const Theme &);
-	void requestText(String &);
-	void requestOption();
+    void setTheme(const Theme &);
+    void requestText(String &);
+    void requestOption();
 
-	void createTitle();
-	void createMenu(const Vector<String> &);
-	void print(const String &);
-	void separator();
-	void clear();
+    void createTitle();
+    void createMenu(const Vector<String> &);
+    void print(const String &);
+    void separator();
+    void clear();
 
-	bool isUInt(const String &) const;
+    bool isUInt(const String &) const;
 
-	void addAction();
-	void removeAction();
-	void editAction();
-	void searchAction();
-	void listAction();
-	void exportAction();
-	void preferencesAction();
-	void aboutAction();
-	void exitAction();
+    void addAction();
+    void removeAction();
+    void editAction();
+    void searchAction();
+    void listAction();
+    void exportAction();
+    void preferencesAction();
+    void aboutAction();
+    void exitAction();
 };
 
 THESAURUS_NAMESPACE_END

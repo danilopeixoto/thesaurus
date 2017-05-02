@@ -34,45 +34,45 @@ THESAURUS_NAMESPACE_BEGIN
 
 class Translator {
 public:
-	enum Language {
-		English = 0,
-		Portuguese,
-		Default
-	};
+    enum Language {
+        English = 0,
+        Portuguese,
+        Default
+    };
 
-	char * ADD;
-	char * REMOVE;
-	char * EDIT;
-	char * SEARCH;
-	char * LIST;
-	char * EXPORT;
-	char * PREFERENCES;
-	char * ABOUT;
-	char * EXIT;
-	char * YES;
-	char * NO;
-	char * OK;
-	char * CANCEL;
-	char * WORD;
-	char * TRANSLATION;
-	char * WORD_COUNT;
-	char * REMOVE_WORD;
-	char * EDIT_WORD;
-	char * SEARCH_ERROR;
-	char * EXPORT_MESSAGE;
-	char * EXPORT_ERROR;
-	char * DEFAULT_LANGUAGE;
-	char * DEFAULT_THEME;
-	char * ENGLISH;
-	char * PORTUGUESE;
-	char * LIGHT;
-	char * DARK;
-	char * DEFAULT;
-	char * SAVE;
-	char * ABOUT_THESAURUS;
-	char * COPYRIGHT;
-	char * LICENSE;
-	char * EXIT_MESSAGE;
+    char * ADD;
+    char * REMOVE;
+    char * EDIT;
+    char * SEARCH;
+    char * LIST;
+    char * EXPORT;
+    char * PREFERENCES;
+    char * ABOUT;
+    char * EXIT;
+    char * YES;
+    char * NO;
+    char * OK;
+    char * CANCEL;
+    char * WORD;
+    char * TRANSLATION;
+    char * WORD_COUNT;
+    char * REMOVE_WORD;
+    char * EDIT_WORD;
+    char * SEARCH_ERROR;
+    char * EXPORT_MESSAGE;
+    char * EXPORT_ERROR;
+    char * DEFAULT_LANGUAGE;
+    char * DEFAULT_THEME;
+    char * ENGLISH;
+    char * PORTUGUESE;
+    char * LIGHT;
+    char * DARK;
+    char * DEFAULT;
+    char * SAVE;
+    char * ABOUT_THESAURUS;
+    char * COPYRIGHT;
+    char * LICENSE;
+    char * EXIT_MESSAGE;
 
     Translator();
     ~Translator();

@@ -32,210 +32,210 @@ THESAURUS_NAMESPACE_BEGIN
 String::Iterator::Iterator(Character * pointer) : pointer(pointer) {}
 
 String::Iterator & String::Iterator::operator =(const Iterator & rhs) {
-	pointer = rhs.pointer;
+    pointer = rhs.pointer;
 
-	return *this;
+    return *this;
 }
 String::Iterator & String::Iterator::operator ++() {
-	pointer = pointer->next;
+    pointer = pointer->next;
 
-	return *this;
+    return *this;
 }
 String::Iterator String::Iterator::operator ++(int) {
-	Iterator it(*this);
+    Iterator it(*this);
 
-	pointer = pointer->next;
-	
-	return it;
+    pointer = pointer->next;
+    
+    return it;
 }
 char & String::Iterator::operator *() {
-	return pointer->data;
+    return pointer->data;
 }
 bool String::Iterator::operator ==(const Iterator & rhs) {
-	return pointer == rhs.pointer;
+    return pointer == rhs.pointer;
 }
 bool String::Iterator::operator !=(const Iterator & rhs) {
-	return pointer != rhs.pointer;
+    return pointer != rhs.pointer;
 }
 
 String::ConstIterator::ConstIterator(Character * pointer) : pointer(pointer) {}
 
 String::ConstIterator & String::ConstIterator::operator =(const ConstIterator & rhs) {
-	pointer = rhs.pointer;
+    pointer = rhs.pointer;
 
-	return *this;
+    return *this;
 }
 String::ConstIterator & String::ConstIterator::operator ++() {
-	pointer = pointer->next;
+    pointer = pointer->next;
 
-	return *this;
+    return *this;
 }
 String::ConstIterator String::ConstIterator::operator ++(int) {
-	ConstIterator it(*this);
+    ConstIterator it(*this);
 
-	pointer = pointer->next;
+    pointer = pointer->next;
 
-	return it;
+    return it;
 }
 const char & String::ConstIterator::operator *() {
-	return pointer->data;
+    return pointer->data;
 }
 bool String::ConstIterator::operator ==(const ConstIterator & rhs) {
-	return pointer == rhs.pointer;
+    return pointer == rhs.pointer;
 }
 bool String::ConstIterator::operator !=(const ConstIterator & rhs) {
-	return pointer != rhs.pointer;
+    return pointer != rhs.pointer;
 }
 
 String::String() : size(0), begin(THESAURUS_NULL), end(THESAURUS_NULL) {}
 String::String(const String & str) {
-	size = 0;
-	begin = THESAURUS_NULL;
-	end = THESAURUS_NULL;
-	
-	ConstIterator it = str.getBegin();
+    size = 0;
+    begin = THESAURUS_NULL;
+    end = THESAURUS_NULL;
+    
+    ConstIterator it = str.getBegin();
 
-	while (it != THESAURUS_NULL)
-		push(*it++);
+    while (it != THESAURUS_NULL)
+        push(*it++);
 }
 String::String(const char * str) {
-	size = 0;
-	begin = THESAURUS_NULL;
-	end = THESAURUS_NULL;
+    size = 0;
+    begin = THESAURUS_NULL;
+    end = THESAURUS_NULL;
 
-	char * c = (char *)&str[0];
-	
-	while (*c)
-		push(*c++);
+    char * c = (char *)&str[0];
+    
+    while (*c)
+        push(*c++);
 }
 String::~String() {
-	clear();
+    clear();
 }
 
 String & String::operator =(const String & rhs) {
-	clear();
+    clear();
 
-	ConstIterator it = rhs.getBegin();
+    ConstIterator it = rhs.getBegin();
 
-	while (it != THESAURUS_NULL)
-		push(*it++);
+    while (it != THESAURUS_NULL)
+        push(*it++);
 
-	return *this;
+    return *this;
 }
 String & String::operator =(const char * rhs) {
-	clear();
-	
-	char * c = (char *)&rhs[0];
-	
-	while (*c)
-		push(*(c++));
-	
-	return *this;
+    clear();
+    
+    char * c = (char *)&rhs[0];
+    
+    while (*c)
+        push(*(c++));
+    
+    return *this;
 }
 bool String::operator ==(const String & rhs) {
-	if (size != rhs.getSize())
-		return false;
+    if (size != rhs.getSize())
+        return false;
 
-	Iterator i = getBegin();
-	ConstIterator j = rhs.getBegin();
+    Iterator i = getBegin();
+    ConstIterator j = rhs.getBegin();
 
-	while (i != THESAURUS_NULL) {
-		if (*i++ != *j++)
-			return false;
-	}
-	
-	return true;
+    while (i != THESAURUS_NULL) {
+        if (*i++ != *j++)
+            return false;
+    }
+    
+    return true;
 }
 bool String::operator !=(const String & rhs) {
-	return !(*this == rhs);
+    return !(*this == rhs);
 }
 std::ostream & operator <<(std::ostream & lhs, const String & rhs) {
-	String::ConstIterator it = rhs.getBegin();
-	
-	while (it != THESAURUS_NULL)
-		lhs << *it++;
-	
-	return lhs;
+    String::ConstIterator it = rhs.getBegin();
+    
+    while (it != THESAURUS_NULL)
+        lhs << *it++;
+    
+    return lhs;
 }
 
 String::Iterator String::getBegin() {
-	return Iterator(begin);
+    return Iterator(begin);
 }
 String::Iterator String::getEnd() {
-	return Iterator(end);
+    return Iterator(end);
 }
 String::ConstIterator String::getBegin() const {
-	return ConstIterator(begin);
+    return ConstIterator(begin);
 }
 String::ConstIterator String::getEnd() const {
-	return ConstIterator(end);
+    return ConstIterator(end);
 }
 
 String & String::push(char character) {
-	Character * node = new Character;
+    Character * node = new Character;
 
-	node->data = character;
-	node->next = THESAURUS_NULL;
+    node->data = character;
+    node->next = THESAURUS_NULL;
 
-	if (end == THESAURUS_NULL)
-		begin = node;
-	else
-		end->next = node;
+    if (end == THESAURUS_NULL)
+        begin = node;
+    else
+        end->next = node;
 
-	end = node;
+    end = node;
 
-	size++;
+    size++;
 
-	return *this;
+    return *this;
 }
 bool String::pop() {
-	if (isEmpty())
-		return false;
+    if (isEmpty())
+        return false;
 
-	Character * node = begin;
-	begin = node->next;
-	
-	if (begin == THESAURUS_NULL)
-		end = THESAURUS_NULL;
-	
-	delete node;
+    Character * node = begin;
+    begin = node->next;
+    
+    if (begin == THESAURUS_NULL)
+        end = THESAURUS_NULL;
+    
+    delete node;
 
-	size--;
+    size--;
 
-	return true;
+    return true;
 }
 String & String::clear() {
-	while (pop());
+    while (pop());
 
-	return *this;
+    return *this;
 }
 
 int String::compare(const String & stringtype) const {
-	ConstIterator i = getBegin();
-	ConstIterator j = stringtype.getBegin();
-	size_t ti, tj;
+    ConstIterator i = getBegin();
+    ConstIterator j = stringtype.getBegin();
+    size_t ti, tj;
 
-	while (i != THESAURUS_NULL && j != THESAURUS_NULL) {
-		ti = (size_t)*i++;
-		tj = (size_t)*j++;
+    while (i != THESAURUS_NULL && j != THESAURUS_NULL) {
+        ti = (size_t)*i++;
+        tj = (size_t)*j++;
 
-		if (ti < tj)
-			return -1;
-		else if (ti > tj)
-			return 1;
-	}
+        if (ti < tj)
+            return -1;
+        else if (ti > tj)
+            return 1;
+    }
 
-	ti = getSize();
-	tj = stringtype.getSize();
-	
-	return (ti < tj) ? -1 : (ti > tj);
+    ti = getSize();
+    tj = stringtype.getSize();
+    
+    return (ti < tj) ? -1 : (ti > tj);
 }
 
 size_t String::getSize() const {
-	return size;
+    return size;
 }
 bool String::isEmpty() const {
-	return begin == THESAURUS_NULL;
+    return begin == THESAURUS_NULL;
 }
 
 THESAURUS_NAMESPACE_END

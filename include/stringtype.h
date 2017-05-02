@@ -35,70 +35,70 @@ THESAURUS_NAMESPACE_BEGIN
 
 class String {
 private:
-	struct Character;
+    struct Character;
 
 public:
-	class Iterator {
-	public:
-		Character * pointer;
+    class Iterator {
+    public:
+        Character * pointer;
 
-		Iterator(Character * = THESAURUS_NULL);
+        Iterator(Character * = THESAURUS_NULL);
 
-		Iterator & operator =(const Iterator &);
-		Iterator & operator ++();
-		Iterator operator ++(int);
-		char & operator *();
-		bool operator ==(const Iterator &);
-		bool operator !=(const Iterator &);
-	};
+        Iterator & operator =(const Iterator &);
+        Iterator & operator ++();
+        Iterator operator ++(int);
+        char & operator *();
+        bool operator ==(const Iterator &);
+        bool operator !=(const Iterator &);
+    };
 
-	class ConstIterator {
-	public:
-		Character * pointer;
+    class ConstIterator {
+    public:
+        Character * pointer;
 
-		ConstIterator(Character * = THESAURUS_NULL);
+        ConstIterator(Character * = THESAURUS_NULL);
 
-		ConstIterator & operator =(const ConstIterator &);
-		ConstIterator & operator ++();
-		ConstIterator operator ++(int);
-		const char & operator *();
-		bool operator ==(const ConstIterator &);
-		bool operator !=(const ConstIterator &);
-	};
-	
-	String();
-	String(const String &);
-	String(const char *);
-	~String();
+        ConstIterator & operator =(const ConstIterator &);
+        ConstIterator & operator ++();
+        ConstIterator operator ++(int);
+        const char & operator *();
+        bool operator ==(const ConstIterator &);
+        bool operator !=(const ConstIterator &);
+    };
+    
+    String();
+    String(const String &);
+    String(const char *);
+    ~String();
 
-	String & operator =(const String &);
-	String & operator =(const char *);
-	bool operator ==(const String &);
-	bool operator !=(const String &);
-	friend std::ostream & operator <<(std::ostream & lhs, const String & rhs);
-	
-	String & push(char);
-	bool pop();
-	String & clear();
+    String & operator =(const String &);
+    String & operator =(const char *);
+    bool operator ==(const String &);
+    bool operator !=(const String &);
+    friend std::ostream & operator <<(std::ostream & lhs, const String & rhs);
+    
+    String & push(char);
+    bool pop();
+    String & clear();
 
-	int compare(const String &) const;
+    int compare(const String &) const;
 
-	Iterator getBegin();
-	Iterator getEnd();
-	ConstIterator getBegin() const;
-	ConstIterator getEnd() const;
+    Iterator getBegin();
+    Iterator getEnd();
+    ConstIterator getBegin() const;
+    ConstIterator getEnd() const;
 
-	size_t getSize() const;
-	bool isEmpty() const;
+    size_t getSize() const;
+    bool isEmpty() const;
 
 private:
-	struct Character {
-		char data;
-		Character * next;
-	};
+    struct Character {
+        char data;
+        Character * next;
+    };
 
-	size_t size;
-	Character * begin, * end;
+    size_t size;
+    Character * begin, * end;
 };
 
 THESAURUS_NAMESPACE_END

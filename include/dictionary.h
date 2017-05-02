@@ -35,77 +35,77 @@
 THESAURUS_NAMESPACE_BEGIN
 
 struct Word {
-	String data, translation;
-	Word * next;
-	
-	Word();
-	Word(const String &, const String &);
-	~Word();
+    String data, translation;
+    Word * next;
+    
+    Word();
+    Word(const String &, const String &);
+    ~Word();
 
-	Word & operator =(const Word &);
-	bool operator ==(const Word &);
-	bool operator !=(const Word &);
-	friend std::ostream & operator <<(std::ostream & lhs, const Word & rhs);
+    Word & operator =(const Word &);
+    bool operator ==(const Word &);
+    bool operator !=(const Word &);
+    friend std::ostream & operator <<(std::ostream & lhs, const Word & rhs);
 };
 
 class Dictionary {
 public:
-	class Iterator {
-	public:
-		Word * pointer;
+    class Iterator {
+    public:
+        Word * pointer;
 
-		Iterator(Word * = THESAURUS_NULL);
+        Iterator(Word * = THESAURUS_NULL);
 
-		Iterator & operator =(const Iterator &);
-		Iterator & operator ++();
-		Iterator operator ++(int);
-		Word & operator *();
-		bool operator ==(const Iterator &);
-		bool operator !=(const Iterator &);
-	};
+        Iterator & operator =(const Iterator &);
+        Iterator & operator ++();
+        Iterator operator ++(int);
+        Word & operator *();
+        bool operator ==(const Iterator &);
+        bool operator !=(const Iterator &);
+    };
 
-	class ConstIterator {
-	public:
-		Word * pointer;
+    class ConstIterator {
+    public:
+        Word * pointer;
 
-		ConstIterator(Word * = THESAURUS_NULL);
+        ConstIterator(Word * = THESAURUS_NULL);
 
-		ConstIterator & operator =(const ConstIterator &);
-		ConstIterator & operator ++();
-		ConstIterator operator ++(int);
-		const Word & operator *();
-		bool operator ==(const ConstIterator &);
-		bool operator !=(const ConstIterator &);
-	};
+        ConstIterator & operator =(const ConstIterator &);
+        ConstIterator & operator ++();
+        ConstIterator operator ++(int);
+        const Word & operator *();
+        bool operator ==(const ConstIterator &);
+        bool operator !=(const ConstIterator &);
+    };
 
-	Dictionary();
-	Dictionary(const Dictionary &);
-	~Dictionary();
+    Dictionary();
+    Dictionary(const Dictionary &);
+    ~Dictionary();
 
-	Dictionary & operator =(const Dictionary &);
-	bool operator ==(const Dictionary &);
-	bool operator !=(const Dictionary &);
+    Dictionary & operator =(const Dictionary &);
+    bool operator ==(const Dictionary &);
+    bool operator !=(const Dictionary &);
 
-	Dictionary & push(const Word &);
-	Dictionary & insertAscending(const Word &);
-	bool pop();
-	Dictionary & removeAfter(Word *);
-	Dictionary & clear();
-	
-	Iterator getBegin();
-	Iterator getEnd();
-	ConstIterator getBegin() const;
-	ConstIterator getEnd() const;
+    Dictionary & push(const Word &);
+    Dictionary & insertAscending(const Word &);
+    bool pop();
+    Dictionary & removeAfter(Word *);
+    Dictionary & clear();
+    
+    Iterator getBegin();
+    Iterator getEnd();
+    ConstIterator getBegin() const;
+    ConstIterator getEnd() const;
 
-	size_t getSize() const;
-	bool isEmpty() const;
+    size_t getSize() const;
+    bool isEmpty() const;
 
 private:
-	size_t size;
-	Word * begin, * end;
-	
-	Dictionary & insertFirst(const Word &);
-	Dictionary & insertAfter(Word *, const Word &);
+    size_t size;
+    Word * begin, * end;
+    
+    Dictionary & insertFirst(const Word &);
+    Dictionary & insertAfter(Word *, const Word &);
 };
 
 THESAURUS_NAMESPACE_END

@@ -31,254 +31,254 @@ THESAURUS_NAMESPACE_BEGIN
 
 Word::Word() {}
 Word::Word(const String & data, const String & translation)
-	: data(data), translation(translation) {}
+    : data(data), translation(translation) {}
 Word::~Word() {}
 
 Word & Word::operator =(const Word & rhs) {
-	data = rhs.data;
-	translation = rhs.translation;
+    data = rhs.data;
+    translation = rhs.translation;
 
-	return *this;
+    return *this;
 }
 bool Word::operator ==(const Word & rhs) {
-	return data == rhs.data && translation == rhs.translation;
+    return data == rhs.data && translation == rhs.translation;
 }
 bool Word::operator !=(const Word & rhs) {
-	return !(*this == rhs);
+    return !(*this == rhs);
 }
 std::ostream & operator <<(std::ostream & lhs, const Word & rhs) {
-	return lhs << rhs.data << ": " << rhs.translation;
+    return lhs << rhs.data << ": " << rhs.translation;
 }
 
 Dictionary::Iterator::Iterator(Word * pointer) : pointer(pointer) {}
 
 Dictionary::Iterator & Dictionary::Iterator::operator =(const Iterator & rhs) {
-	pointer = rhs.pointer;
+    pointer = rhs.pointer;
 
-	return *this;
+    return *this;
 }
 Dictionary::Iterator & Dictionary::Iterator::operator ++() {
-	pointer = pointer->next;
+    pointer = pointer->next;
 
-	return *this;
+    return *this;
 }
 Dictionary::Iterator Dictionary::Iterator::operator ++(int) {
-	Iterator it(*this);
+    Iterator it(*this);
 
-	pointer = pointer->next;
+    pointer = pointer->next;
 
-	return it;
+    return it;
 }
 Word & Dictionary::Iterator::operator *() {
-	return *pointer;
+    return *pointer;
 }
 bool Dictionary::Iterator::operator ==(const Iterator & rhs) {
-	return pointer == rhs.pointer;
+    return pointer == rhs.pointer;
 }
 bool Dictionary::Iterator::operator !=(const Iterator & rhs) {
-	return pointer != rhs.pointer;
+    return pointer != rhs.pointer;
 }
 
 Dictionary::ConstIterator::ConstIterator(Word * pointer) : pointer(pointer) {}
 
 Dictionary::ConstIterator & Dictionary::ConstIterator::operator =(const ConstIterator & rhs) {
-	pointer = rhs.pointer;
+    pointer = rhs.pointer;
 
-	return *this;
+    return *this;
 }
 Dictionary::ConstIterator & Dictionary::ConstIterator::operator ++() {
-	pointer = pointer->next;
+    pointer = pointer->next;
 
-	return *this;
+    return *this;
 }
 Dictionary::ConstIterator Dictionary::ConstIterator::operator ++(int) {
-	ConstIterator it(*this);
+    ConstIterator it(*this);
 
-	pointer = pointer->next;
+    pointer = pointer->next;
 
-	return it;
+    return it;
 }
 const Word & Dictionary::ConstIterator::operator *() {
-	return *pointer;
+    return *pointer;
 }
 bool Dictionary::ConstIterator::operator ==(const ConstIterator & rhs) {
-	return pointer == rhs.pointer;
+    return pointer == rhs.pointer;
 }
 bool Dictionary::ConstIterator::operator !=(const ConstIterator & rhs) {
-	return pointer != rhs.pointer;
+    return pointer != rhs.pointer;
 }
 
 Dictionary::Dictionary() : size(0), begin(THESAURUS_NULL), end(THESAURUS_NULL) {}
 Dictionary::Dictionary(const Dictionary & dictionary) {
-	size = 0;
-	begin = THESAURUS_NULL;
-	end = THESAURUS_NULL;
+    size = 0;
+    begin = THESAURUS_NULL;
+    end = THESAURUS_NULL;
 
-	ConstIterator it = dictionary.getBegin();
+    ConstIterator it = dictionary.getBegin();
 
-	while (it != THESAURUS_NULL)
-		push(*it++);
+    while (it != THESAURUS_NULL)
+        push(*it++);
 }
 Dictionary::~Dictionary() {
-	clear();
+    clear();
 }
 
 Dictionary & Dictionary::operator =(const Dictionary & rhs) {
-	clear();
+    clear();
 
-	ConstIterator it = rhs.getBegin();
+    ConstIterator it = rhs.getBegin();
 
-	while (it != THESAURUS_NULL)
-		push(*it++);
+    while (it != THESAURUS_NULL)
+        push(*it++);
 
-	return *this;
+    return *this;
 }
 bool Dictionary::operator ==(const Dictionary & rhs) {
-	if (size != rhs.getSize())
-		return false;
+    if (size != rhs.getSize())
+        return false;
 
-	Iterator i = getBegin();
-	ConstIterator j = rhs.getBegin();
+    Iterator i = getBegin();
+    ConstIterator j = rhs.getBegin();
 
-	while (i != THESAURUS_NULL) {
-		if (*i++ != *j++)
-			return false;
-	}
+    while (i != THESAURUS_NULL) {
+        if (*i++ != *j++)
+            return false;
+    }
 
-	return true;
+    return true;
 }
 bool Dictionary::operator !=(const Dictionary & rhs) {
-	return !(*this == rhs);
+    return !(*this == rhs);
 }
 
 Dictionary::Iterator Dictionary::getBegin() {
-	return Iterator(begin);
+    return Iterator(begin);
 }
 Dictionary::Iterator Dictionary::getEnd() {
-	return Iterator(end);
+    return Iterator(end);
 }
 Dictionary::ConstIterator Dictionary::getBegin() const {
-	return ConstIterator(begin);
+    return ConstIterator(begin);
 }
 Dictionary::ConstIterator Dictionary::getEnd() const {
-	return ConstIterator(end);
+    return ConstIterator(end);
 }
 
 Dictionary & Dictionary::push(const Word & word) {
-	Word * node = new Word;
+    Word * node = new Word;
 
-	*node = word;
-	node->next = THESAURUS_NULL;
+    *node = word;
+    node->next = THESAURUS_NULL;
 
-	if (end == THESAURUS_NULL)
-		begin = node;
-	else
-		end->next = node;
+    if (end == THESAURUS_NULL)
+        begin = node;
+    else
+        end->next = node;
 
-	end = node;
+    end = node;
 
-	size++;
+    size++;
 
-	return *this;
+    return *this;
 }
 Dictionary & Dictionary::insertAscending(const Word & word) {
-	if (isEmpty()) {
-		push(word);
+    if (isEmpty()) {
+        push(word);
 
-		return *this;
-	}
-	
-	Word * node, * prevNode;
+        return *this;
+    }
+    
+    Word * node, * prevNode;
 
-	node = begin;
-	prevNode = THESAURUS_NULL;
-	
-	while (node != THESAURUS_NULL && word.data.compare(node->data) > 0) {
-		prevNode = node;
-		node = node->next;
-	}
-	
-	if (prevNode == THESAURUS_NULL)
-		insertFirst(word);
-	else
-		insertAfter(prevNode, word);
-	
-	return *this;
+    node = begin;
+    prevNode = THESAURUS_NULL;
+    
+    while (node != THESAURUS_NULL && word.data.compare(node->data) > 0) {
+        prevNode = node;
+        node = node->next;
+    }
+    
+    if (prevNode == THESAURUS_NULL)
+        insertFirst(word);
+    else
+        insertAfter(prevNode, word);
+    
+    return *this;
 }
 bool Dictionary::pop() {
-	if (isEmpty())
-		return false;
+    if (isEmpty())
+        return false;
 
-	Word * node = begin;
-	begin = node->next;
+    Word * node = begin;
+    begin = node->next;
 
-	if (begin == THESAURUS_NULL)
-		end = THESAURUS_NULL;
+    if (begin == THESAURUS_NULL)
+        end = THESAURUS_NULL;
 
-	delete node;
+    delete node;
 
-	size--;
+    size--;
 
-	return true;
+    return true;
 }
 Dictionary & Dictionary::removeAfter(Word * node) {
-	if (node == THESAURUS_NULL) {
-		pop();
+    if (node == THESAURUS_NULL) {
+        pop();
 
-		return *this;
-	}
-	
-	Word * nextNode = node->next;
-	node->next = nextNode->next;
+        return *this;
+    }
+    
+    Word * nextNode = node->next;
+    node->next = nextNode->next;
 
-	if (nextNode == end)
-		end = node;
-	
-	delete nextNode;
-	
-	size--;
-	
-	return *this;
+    if (nextNode == end)
+        end = node;
+    
+    delete nextNode;
+    
+    size--;
+    
+    return *this;
 }
 Dictionary & Dictionary::clear() {
-	while (pop());
+    while (pop());
 
-	return *this;
+    return *this;
 }
 
 size_t Dictionary::getSize() const {
-	return size;
+    return size;
 }
 bool Dictionary::isEmpty() const {
-	return begin == THESAURUS_NULL;
+    return begin == THESAURUS_NULL;
 }
 
 Dictionary & Dictionary::insertFirst(const Word & word) {
-	Word * node = new Word;
+    Word * node = new Word;
 
-	*node = word;
-	node->next = begin;
+    *node = word;
+    node->next = begin;
 
-	begin = node;
+    begin = node;
 
-	size++;
+    size++;
 
-	return *this;
+    return *this;
 }
 Dictionary & Dictionary::insertAfter(Word * node, const Word & word) {
-	Word * newNode = new Word;
+    Word * newNode = new Word;
 
-	*newNode = word;
-	newNode->next = node->next;
+    *newNode = word;
+    newNode->next = node->next;
 
-	node->next = newNode;
+    node->next = newNode;
 
-	if (end == node)
-		end = newNode;
+    if (end == node)
+        end = newNode;
 
-	size++;
-	
-	return *this;
+    size++;
+    
+    return *this;
 }
 
 THESAURUS_NAMESPACE_END

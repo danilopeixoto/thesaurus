@@ -30,9 +30,9 @@
 THESAURUS_NAMESPACE_USING
 
 int main(int argc, char ** argv) {
-	Application application;
+    Application application;
 
-	application.execute();
-	
-	return 0;
+    application.execute();
+    
+    return 0;
 }
