@@ -88,14 +88,14 @@ bool String::ConstIterator::operator !=(const ConstIterator & rhs) {
 }
 
 String::String() : size(0), begin(THESAURUS_NULL), end(THESAURUS_NULL) {}
-String::String(const String & str) {
+String::String(const String & stringtype) {
     size = 0;
     begin = THESAURUS_NULL;
     end = THESAURUS_NULL;
     
-    ConstIterator it = str.getBegin();
+    ConstIterator it = stringtype.getBegin();
 
-    while (it != THESAURUS_NULL)
+    while (it != stringtype.getEnd())
         push(*it++);
 }
 String::String(const char * str) {
@@ -117,7 +117,7 @@ String & String::operator =(const String & rhs) {
 
     ConstIterator it = rhs.getBegin();
 
-    while (it != THESAURUS_NULL)
+    while (it != rhs.getEnd())
         push(*it++);
 
     return *this;
@@ -139,7 +139,7 @@ bool String::operator ==(const String & rhs) {
     Iterator i = getBegin();
     ConstIterator j = rhs.getBegin();
 
-    while (i != THESAURUS_NULL) {
+    while (i != getEnd()) {
         if (*i++ != *j++)
             return false;
     }
@@ -150,10 +150,12 @@ bool String::operator !=(const String & rhs) {
     return !(*this == rhs);
 }
 std::ostream & operator <<(std::ostream & lhs, const String & rhs) {
-    String::ConstIterator it = rhs.getBegin();
-    
-    while (it != THESAURUS_NULL)
-        lhs << *it++;
+    char * str = new char[rhs.getSize() + 1];
+
+    rhs.getString(str, rhs.getSize());
+    lhs << str;
+
+    delete str;
     
     return lhs;
 }
@@ -162,13 +164,13 @@ String::Iterator String::getBegin() {
     return Iterator(begin);
 }
 String::Iterator String::getEnd() {
-    return Iterator(end);
+    return Iterator(THESAURUS_NULL);
 }
 String::ConstIterator String::getBegin() const {
     return ConstIterator(begin);
 }
 String::ConstIterator String::getEnd() const {
-    return ConstIterator(end);
+    return ConstIterator(THESAURUS_NULL);
 }
 
 String & String::push(char character) {
@@ -215,7 +217,7 @@ int String::compare(const String & stringtype) const {
     ConstIterator j = stringtype.getBegin();
     size_t ti, tj;
 
-    while (i != THESAURUS_NULL && j != THESAURUS_NULL) {
+    while (i != getEnd() && j != stringtype.getEnd()) {
         ti = (size_t)*i++;
         tj = (size_t)*j++;
 
@@ -236,6 +238,15 @@ size_t String::getSize() const {
 }
 bool String::isEmpty() const {
     return begin == THESAURUS_NULL;
+}
+void String::getString(char * str, size_t size) const {
+    ConstIterator it = getBegin();
+    size_t i = 0;
+    
+    while (it != getEnd() && i < size)
+        str[i++] = *it++;
+    
+    str[i] = '\0';
 }
 
 THESAURUS_NAMESPACE_END

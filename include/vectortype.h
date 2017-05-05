@@ -107,14 +107,14 @@ public:
     };
 
     Vector() : size(0), begin(THESAURUS_NULL), end(THESAURUS_NULL) {}
-    Vector(const Vector & vec) {
+    Vector(const Vector & vectortype) {
         size = 0;
         begin = THESAURUS_NULL;
         end = THESAURUS_NULL;
 
-        ConstIterator it = vec.getBegin();
+        ConstIterator it = vectortype.getBegin();
 
-        while (it != THESAURUS_NULL)
+        while (it != vectortype.getEnd())
             push(*it++);
     }
     ~Vector() {
@@ -126,7 +126,7 @@ public:
 
         ConstIterator it = rhs.getBegin();
 
-        while (it != THESAURUS_NULL)
+        while (it != rhs.getEnd())
             push(*it++);
 
         return *this;
@@ -138,7 +138,7 @@ public:
         Iterator i = getBegin();
         ConstIterator j = rhs.getBegin();
 
-        while (i != THESAURUS_NULL) {
+        while (i != getEnd()) {
             if (*i++ != *j++)
                 return false;
         }
@@ -192,13 +192,13 @@ public:
         return Iterator(begin);
     }
     Iterator getEnd() {
-        return Iterator(end);
+        return Iterator(THESAURUS_NULL);
     }
     ConstIterator getBegin() const {
         return ConstIterator(begin);
     }
     ConstIterator getEnd() const {
-        return ConstIterator(end);
+        return ConstIterator(THESAURUS_NULL);
     }
 
     size_t getSize() const {

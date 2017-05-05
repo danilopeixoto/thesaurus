@@ -139,25 +139,20 @@ void Application::requestOption() {
 
     requestText(optionString);
     
-    size_t count = 0;
-
-    while (optionString.getSize() > THESAURUS_MAX_OPTION_LENGTH) {
-        if (count < THESAURUS_MAX_OPTION_LENGTH) {
-            optionString.push(*optionString.getBegin());
-            
-            count++;
-        }
+    if (optionString.getSize() > THESAURUS_MAX_OPTION_LENGTH) {
+        char temp[THESAURUS_MAX_OPTION_LENGTH + 1];
         
-        optionString.pop();
+        optionString.getString(temp, THESAURUS_MAX_OPTION_LENGTH);
+        optionString = temp;
     }
-
+    
     option = 0;
     
     if (!isUInt(optionString))
         return;
     
     String::Iterator it = optionString.getBegin();
-    count = optionString.getSize();
+    size_t count = optionString.getSize();
 
     while (count != 0) {
         option += (size_t)std::pow(10, count - 1) * ((size_t)(*it++) - 48);
@@ -190,7 +185,7 @@ bool Application::isUInt(const String & str) const {
     String::ConstIterator it = str.getBegin();
     size_t c;
 
-    while (it != THESAURUS_NULL) {
+    while (it != str.getEnd()) {
         c = (size_t)*it++;
 
         if (c < 48 || c > 57)
@@ -271,7 +266,7 @@ void Application::removeAction() {
 
     size_t i = 1;
 
-    while (it != THESAURUS_NULL) {
+    while (it != dictionary.getEnd()) {
         if ((*it).data == str) {
             std::cout << i++ << ". " << *it << std::endl;
             temp.push(prevIt);
@@ -386,7 +381,7 @@ void Application::editAction() {
 
     size_t i = 1;
 
-    while (it != THESAURUS_NULL) {
+    while (it != dictionary.getEnd()) {
         if ((*it).data == str) {
             std::cout << i++ << ". " << *it << std::endl;
             temp.push(prevIt);
@@ -511,7 +506,7 @@ void Application::searchAction() {
     Dictionary::Iterator it = dictionary.getBegin();
     size_t i = 1;
 
-    while (it != THESAURUS_NULL) {
+    while (it != dictionary.getEnd()) {
         if ((*it).data == word)
             std::cout << i++ << ". " << *it << std::endl;
 
@@ -605,10 +600,7 @@ void Application::exportAction() {
 
     requestText(filename);
     separator();
-
-    String::Iterator it = filename.getBegin();
-    size_t count = 0;
-
+    
     Vector<String> menu;
     menu.push(translator.EXPORT);
     menu.push(translator.CANCEL);
@@ -623,18 +615,15 @@ void Application::exportAction() {
     switch (option) {
     case 1:
         char temp[THESAURUS_MAX_PATH_LENGTH + 1];
-
-        while (it != THESAURUS_NULL && count != THESAURUS_MAX_PATH_LENGTH)
-            temp[count++] = *it++;
-
-        temp[count] = '\0';
-
+        
+        filename.getString(temp, THESAURUS_MAX_PATH_LENGTH);
+        
         file.open(temp, std::fstream::out);
 
         if (file.is_open()) {
             Dictionary::Iterator itd = dictionary.getBegin();
 
-            while (itd != THESAURUS_NULL)
+            while (itd != dictionary.getEnd())
                 file << *itd++ << std::endl;
 
             file.close();

@@ -116,7 +116,7 @@ Dictionary::Dictionary(const Dictionary & dictionary) {
 
     ConstIterator it = dictionary.getBegin();
 
-    while (it != THESAURUS_NULL)
+    while (it != dictionary.getEnd())
         push(*it++);
 }
 Dictionary::~Dictionary() {
@@ -128,7 +128,7 @@ Dictionary & Dictionary::operator =(const Dictionary & rhs) {
 
     ConstIterator it = rhs.getBegin();
 
-    while (it != THESAURUS_NULL)
+    while (it != rhs.getEnd())
         push(*it++);
 
     return *this;
@@ -140,7 +140,7 @@ bool Dictionary::operator ==(const Dictionary & rhs) {
     Iterator i = getBegin();
     ConstIterator j = rhs.getBegin();
 
-    while (i != THESAURUS_NULL) {
+    while (i != getEnd()) {
         if (*i++ != *j++)
             return false;
     }
@@ -155,13 +155,13 @@ Dictionary::Iterator Dictionary::getBegin() {
     return Iterator(begin);
 }
 Dictionary::Iterator Dictionary::getEnd() {
-    return Iterator(end);
+    return Iterator(THESAURUS_NULL);
 }
 Dictionary::ConstIterator Dictionary::getBegin() const {
     return ConstIterator(begin);
 }
 Dictionary::ConstIterator Dictionary::getEnd() const {
-    return ConstIterator(end);
+    return ConstIterator(THESAURUS_NULL);
 }
 
 Dictionary & Dictionary::push(const Word & word) {

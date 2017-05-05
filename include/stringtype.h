@@ -90,6 +90,7 @@ public:
 
     size_t getSize() const;
     bool isEmpty() const;
+    void getString(char *, size_t) const;
 
 private:
     struct Character {
